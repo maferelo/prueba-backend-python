@@ -5,8 +5,11 @@ Base de datos para ordenes, productos y usuarios con servicio REST
 ### Setup:
 
 > python -m venv venv
+
 > .\venv\Scripts\activate
+
 > python -m pip install --upgrade pip
+
 > pip install -r requirements.txt
 
 ### Run
