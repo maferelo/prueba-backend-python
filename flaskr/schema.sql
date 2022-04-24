@@ -28,6 +28,52 @@ CREATE TABLE "product" (
   price DOUBLE(10, 2) NOT NULL
 );
 
+
+DROP TABLE IF EXISTS "customer";
+
+CREATE TABLE "customer" (
+  customer_id INTEGER PRIMARY KEY AUTOINCREMENT,
+  "name" VARCHAR(191) NOT NULL,
+  email VARCHAR(191) NOT NULL
+);
+
+
+DROP TABLE IF EXISTS "order";
+
+CREATE TABLE "order" (
+  order_id INTEGER PRIMARY KEY AUTOINCREMENT,
+  customer_id INTEGER NOT NULL,
+  creation_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  delivery_address VARCHAR(191) NOT NULL,
+  product_count INTEGER NOT NULL DEFAULT 0,
+  "total" DOUBLE(15, 2) DEFAULT 0,
+  FOREIGN KEY (customer_id) REFERENCES customer (customer_id)
+);
+
+
+DROP TABLE IF EXISTS "order_detail";
+
+CREATE TABLE "order_detail" (
+  order_detail_id INTEGER PRIMARY KEY AUTOINCREMENT,
+  order_id INTEGER NOT NULL,
+  product_id INTEGER NOT NULL,
+  product_description VARCHAR(191) NOT NULL,
+  price DOUBLE(10, 2) NOT NULL,
+  quantity INTEGER NOT NULL,
+  FOREIGN KEY (order_id) REFERENCES "order" (order_id),
+  FOREIGN KEY (product_id) REFERENCES product (product_id)
+);
+
+DROP TABLE IF EXISTS "customer_product";
+
+CREATE TABLE "customer_product" (
+  customer_id INTEGER NOT NULL,
+  product_id INTEGER NOT NULL,
+  FOREIGN KEY (customer_id) REFERENCES customer (customer_id),
+  FOREIGN KEY (product_id) REFERENCES product (product_id),
+  PRIMARY KEY (customer_id, product_id)
+);
+
 INSERT INTO product ("name",product_description,price)
 	VALUES ('Product A','Description A',100);
 INSERT INTO product ("name",product_description,price)
@@ -80,16 +126,7 @@ INSERT INTO product ("name",product_description,price)
 	VALUES ('Product Y','Description Y',2500);
 INSERT INTO product ("name",product_description,price)
 	VALUES ('Product Z','Description Z',2600);
-
-
-DROP TABLE IF EXISTS "customer";
-
-CREATE TABLE "customer" (
-  customer_id INTEGER PRIMARY KEY AUTOINCREMENT,
-  "name" VARCHAR(191) NOT NULL,
-  email VARCHAR(191) NOT NULL
-);
-
+	
 INSERT INTO customer ("name",email)
 	VALUES ('Customer A','a@gmail.com');
 INSERT INTO customer ("name",email)
@@ -142,42 +179,6 @@ INSERT INTO customer ("name",email)
 	VALUES ('Customer Y','y@gmail.com');
 INSERT INTO customer ("name",email)
 	VALUES ('Customer Z','z@gmail.com');
-
-
-DROP TABLE IF EXISTS "order";
-
-CREATE TABLE "order" (
-  order_id INTEGER PRIMARY KEY AUTOINCREMENT,
-  customer_id INTEGER NOT NULL,
-  creation_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  delivery_address VARCHAR(191) NOT NULL,
-  "total" DOUBLE(15, 2) NOT NULL,
-  FOREIGN KEY (customer_id) REFERENCES customer (customer_id)
-);
-
-
-DROP TABLE IF EXISTS "order_detail";
-
-CREATE TABLE "order_detail" (
-  order_detail_id INTEGER PRIMARY KEY AUTOINCREMENT,
-  order_id INTEGER NOT NULL,
-  product_id INTEGER NOT NULL,
-  product_description VARCHAR(191) NOT NULL,
-  price DOUBLE(10, 2) NOT NULL,
-  quantity INTEGER NOT NULL,
-  FOREIGN KEY (order_id) REFERENCES "order" (order_id),
-  FOREIGN KEY (product_id) REFERENCES product (product_id)
-);
-
-DROP TABLE IF EXISTS "customer_product";
-
-CREATE TABLE "customer_product" (
-  customer_id INTEGER NOT NULL,
-  product_id INTEGER NOT NULL,
-  FOREIGN KEY (customer_id) REFERENCES customer (customer_id),
-  FOREIGN KEY (product_id) REFERENCES product (product_id),
-  PRIMARY KEY (customer_id, product_id)
-);
 
 INSERT INTO customer_product (customer_id,product_id)
 	VALUES (1, 4);
