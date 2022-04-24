@@ -27,6 +27,15 @@ Go to http://127.0.0.1:5000/
 #
 
 
+## Diagrama Entidad Relación
+
+![Alt text](diagram.png?raw=true "Diagrama Entidad Relación")
+
+## Documentación de los métodos del API REST
+
+## Diagrama de clases u otros diagramas 
+
+## P.D.
 
 On knowledge in design patterns and S.O.L.I.D. principles checkout this other challenge I took.
 
