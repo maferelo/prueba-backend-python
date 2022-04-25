@@ -1,4 +1,4 @@
-# TODO: More test cases, check sgrouping totals and no products
+# TODO: More test cases, check grouping totals and no products
 
 CREATE_ORDER_PARAMS = {
     "customerId": "1",
