@@ -10,7 +10,7 @@ bp = Blueprint("orders", __name__)
 
 
 @bp.route("/", methods=(["GET"]))
-def index():
+def list_orders():
     """Show all the orders, most recent first."""
     db = get_db()
     ini_date = request.args.get('iniDate') or ""
@@ -40,7 +40,7 @@ def index():
 
 
 @bp.route("/create-order", methods=(["POST"]))
-def create():
+def create_order():
     """Create a new order."""
     customer_id = request.args.get('customerId') or ""
     delivery_address = request.args.get('deliveryAddress') or ""
@@ -63,7 +63,7 @@ def create():
 
 
 @bp.route("/create-order-detail", methods=(["POST"]))
-def create_detail():
+def create_order_detail():
     """Create a new order detail."""
     customer_id = request.args.get('customerId') or ""
     order_id = request.args.get('orderId') or ""
