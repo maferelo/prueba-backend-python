@@ -37,6 +37,6 @@ http://localhost:5000/swagger/
 
 ## Diagrama de clases u otros diagramas 
 
-On knowledge in design patterns and S.O.L.I.D. principles checkout this other challenge I took.
+On my knowledge in design patterns and S.O.L.I.D. principles checkout this other challenge I took.
 
 https://github.com/maferelo/prueba-python
