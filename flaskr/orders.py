@@ -1,6 +1,10 @@
 from flask import Blueprint
 from flask import jsonify
 from flask import request
+from flask_apispec import use_kwargs, doc, marshal_with
+
+from marshmallow import Schema
+from webargs import fields
 
 from flaskr.db import get_db
 from flaskr.utils import validate, valid_address, get_model, product_of_customer
@@ -8,9 +12,31 @@ from flaskr.querys import LIST_ORDERS, UPDATE_ORDER_TOTAL, CREATE_ORDER_DETAIL, 
 
 bp = Blueprint("orders", __name__)
 
+class OrderGetSchema(Schema):
+    iniDate = fields.Date(required=True, description="Initial date '%Y-%m-%d'")
+    endDate = fields.Date(required=True, description="End date '%Y-%m-%d'")
 
+class OrderPutSchema(Schema):
+    customerId = fields.Integer(required=True)
+    deliveryAddress = fields.Str(required=True)
+
+class OrderDetailPostSchema(Schema):
+    customerId = fields.Integer(required=True)
+    orderId = fields.Integer(required=True)
+    productId = fields.Integer(required=True)
+    quantity = fields.Integer(required=True)
+
+class ReturnSchema(Schema):
+    endDate = fields.Str(required=True, description="Respone with error or list of orders")
+
+class ReturnCreateSchema(Schema):
+    endDate = fields.Str(required=True, description="Respone with error or id of object created")
+
+@doc(description='Get list of orders.', tags=['order', 'list'])
+@use_kwargs(OrderGetSchema)
+@marshal_with(ReturnSchema)
 @bp.route("/", methods=(["GET"]))
-def list_orders():
+def get_orders(**kwargs):
     """Show all the orders, most recent first."""
     db = get_db()
     ini_date = request.args.get('iniDate') or ""
@@ -38,9 +64,11 @@ def list_orders():
 
     return jsonify(new_orders)
 
-
+@doc(description='Create order.', tags=['order'])
+@use_kwargs(OrderPutSchema)
+@marshal_with(ReturnCreateSchema)
 @bp.route("/create-order", methods=(["POST"]))
-def create_order():
+def put_order():
     """Create a new order."""
     customer_id = request.args.get('customerId') or ""
     delivery_address = request.args.get('deliveryAddress') or ""
@@ -61,9 +89,11 @@ def create_order():
     db.commit()
     return jsonify({'order': order})
 
-
+@doc(description='Create detail for order.', tags=['order', 'detail'])
+@use_kwargs(OrderDetailPostSchema)
+@marshal_with(ReturnCreateSchema)
 @bp.route("/create-order-detail", methods=(["POST"]))
-def create_order_detail():
+def post_order_detail():
     """Create a new order detail."""
     customer_id = request.args.get('customerId') or ""
     order_id = request.args.get('orderId') or ""

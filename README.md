@@ -33,9 +33,9 @@ Go to http://127.0.0.1:5000/
 
 ## Documentación de los métodos del API REST
 
-## Diagrama de clases u otros diagramas 
+http://localhost:5000/swagger/
 
-## P.D.
+## Diagrama de clases u otros diagramas 
 
 On knowledge in design patterns and S.O.L.I.D. principles checkout this other challenge I took.
 

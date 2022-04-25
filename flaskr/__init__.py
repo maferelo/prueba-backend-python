@@ -2,6 +2,9 @@ import os
 
 from flask import Flask
 
+from apispec import APISpec
+from apispec.ext.marshmallow import MarshmallowPlugin
+from flask_apispec.extension import FlaskApiSpec
 
 def create_app(test_config=None):
     """Create and configure an instance of the Flask application."""
@@ -43,6 +46,24 @@ def create_app(test_config=None):
     # in another app, you might define a separate main index here with
     # app.route, while giving the blog blueprint a url_prefix, but for
     # the tutorial the blog will be the main index
-    app.add_url_rule("/", endpoint="index")
+    app.add_url_rule("/", endpoint="get_orders")
+    app.add_url_rule("/create-order", endpoint="put_order")
+    app.add_url_rule("/create-order-detail", endpoint="post_order_detail")
+
+    app.config.update({
+        'APISPEC_SPEC': APISpec(
+            title='orders',
+            version='v1',
+            openapi_version="3.0.3",
+            plugins=[MarshmallowPlugin()]
+        ),
+        'APISPEC_SWAGGER_URL': '/swagger/',
+    })
+    
+    docs = FlaskApiSpec(app)
+
+    docs.register(orders.get_orders)
+    docs.register(orders.put_order)
+    docs.register(orders.post_order_detail)
 
     return app

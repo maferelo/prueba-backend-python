@@ -1,0 +1,248 @@
+{
+  "components": {
+    "schemas": {
+      "OrderDetailPost": {
+        "properties": {
+          "customerId": {
+            "type": "integer"
+          }, 
+          "orderId": {
+            "type": "integer"
+          }, 
+          "productId": {
+            "type": "integer"
+          }, 
+          "quantity": {
+            "type": "integer"
+          }
+        }, 
+        "required": [
+          "customerId", 
+          "orderId", 
+          "productId", 
+          "quantity"
+        ], 
+        "type": "object"
+      }, 
+      "OrderGet": {
+        "properties": {
+          "endDate": {
+            "description": "End date '%Y-%m-%d'", 
+            "format": "date", 
+            "type": "string"
+          }, 
+          "iniDate": {
+            "description": "Initial date '%Y-%m-%d'", 
+            "format": "date", 
+            "type": "string"
+          }
+        }, 
+        "required": [
+          "endDate", 
+          "iniDate"
+        ], 
+        "type": "object"
+      }, 
+      "OrderPut": {
+        "properties": {
+          "customerId": {
+            "type": "integer"
+          }, 
+          "deliveryAddress": {
+            "type": "string"
+          }
+        }, 
+        "required": [
+          "customerId", 
+          "deliveryAddress"
+        ], 
+        "type": "object"
+      }, 
+      "Return": {
+        "properties": {
+          "endDate": {
+            "description": "Respone with error or list of orders", 
+            "type": "string"
+          }
+        }, 
+        "required": [
+          "endDate"
+        ], 
+        "type": "object"
+      }, 
+      "ReturnCreate": {
+        "properties": {
+          "endDate": {
+            "description": "Respone with error or id of object created", 
+            "type": "string"
+          }
+        }, 
+        "required": [
+          "endDate"
+        ], 
+        "type": "object"
+      }
+    }
+  }, 
+  "info": {
+    "title": "orders", 
+    "version": "v1"
+  }, 
+  "openapi": "3.0.3", 
+  "paths": {
+    "/": {
+      "get": {
+        "description": "Get list of orders.", 
+        "parameters": [
+          {
+            "in": "body", 
+            "name": "body", 
+            "required": false, 
+            "schema": {
+              "$ref": "#/components/schemas/OrderGet"
+            }
+          }
+        ], 
+        "responses": {
+          "default": {
+            "description": "", 
+            "schema": {
+              "$ref": "#/components/schemas/Return"
+            }
+          }
+        }, 
+        "tags": [
+          "order", 
+          "list"
+        ]
+      }, 
+      "options": {
+        "description": "Get list of orders.", 
+        "parameters": [
+          {
+            "in": "body", 
+            "name": "body", 
+            "required": false, 
+            "schema": {
+              "$ref": "#/components/schemas/OrderGet"
+            }
+          }
+        ], 
+        "responses": {
+          "default": {
+            "description": "", 
+            "schema": {
+              "$ref": "#/components/schemas/Return"
+            }
+          }
+        }, 
+        "tags": [
+          "order", 
+          "list"
+        ]
+      }
+    }, 
+    "/create-order": {
+      "get": {
+        "description": "Create order.", 
+        "parameters": [
+          {
+            "in": "body", 
+            "name": "body", 
+            "required": false, 
+            "schema": {
+              "$ref": "#/components/schemas/OrderPut"
+            }
+          }
+        ], 
+        "responses": {
+          "default": {
+            "description": "", 
+            "schema": {
+              "$ref": "#/components/schemas/ReturnCreate"
+            }
+          }
+        }, 
+        "tags": [
+          "order"
+        ]
+      }, 
+      "options": {
+        "description": "Create order.", 
+        "parameters": [
+          {
+            "in": "body", 
+            "name": "body", 
+            "required": false, 
+            "schema": {
+              "$ref": "#/components/schemas/OrderPut"
+            }
+          }
+        ], 
+        "responses": {
+          "default": {
+            "description": "", 
+            "schema": {
+              "$ref": "#/components/schemas/ReturnCreate"
+            }
+          }
+        }, 
+        "tags": [
+          "order"
+        ]
+      }
+    }, 
+    "/create-order-detail": {
+      "get": {
+        "description": "Create detail for order.", 
+        "parameters": [
+          {
+            "in": "body", 
+            "name": "body", 
+            "required": false, 
+            "schema": {
+              "$ref": "#/components/schemas/OrderDetailPost"
+            }
+          }
+        ], 
+        "responses": {
+          "default": {
+            "description": "", 
+            "schema": {
+              "$ref": "#/components/schemas/ReturnCreate"
+            }
+          }
+        }, 
+        "tags": [
+          "order", 
+          "detail"
+        ]
+      }, 
+      "options": {
+        "description": "Create detail for order.", 
+        "parameters": [
+          {
+            "in": "body", 
+            "name": "body", 
+            "required": false, 
+            "schema": {
+              "$ref": "#/components/schemas/OrderDetailPost"
+            }
+          }
+        ], 
+        "responses": {
+          "default": {
+            "description": "", 
+            "schema": {
+              "$ref": "#/components/schemas/ReturnCreate"
+            }
+          }
+        }, 
+        "tags": [
+          "order", 
+          "detail"
+        ]
+      }
+    }
+  }
+}
